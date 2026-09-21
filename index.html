@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Limausong — Playlist Pribadi</title>
+
+    <!-- Google Font -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- CSS -->
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         NAVBAR
+    ========================================== -->
+
+    <header class="navbar">
+
+        <a
+            href="#home"
+            class="logo"
+        >
+
+            <span class="logo-icon">
+                ♪
+            </span>
+
+            <span>
+                Limausong
+            </span>
+
+        </a>
+
+
+        <nav class="nav-menu">
+
+            <a
+                href="#home"
+                class="active"
+            >
+                Home
+            </a>
+
+            <a href="#discover">
+                Discover
+            </a>
+
+            <a href="#songs">
+                My Songs
+            </a>
+
+        </nav>
+
+
+        <div class="nav-right">
+
+            <button
+                class="search-button"
+                id="searchButton"
+            >
+
+                <span class="search-icon">
+                    ⌕
+                </span>
+
+                <span>
+                    Search
+                </span>
+
+            </button>
+
+
+            <button class="login-button">
+                Login
+            </button>
+
+
+            <button
+                class="menu-button"
+                id="menuButton"
+            >
+                ☰
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         MOBILE MENU
+    ========================================== -->
+
+    <div
+        class="mobile-menu"
+        id="mobileMenu"
+    >
+
+        <a href="#home">
+            Home
+        </a>
+
+        <a href="#discover">
+            Discover
+        </a>
+
+        <a href="#songs">
+            My Songs
+        </a>
+
+    </div>
+
+
+    <!-- =========================================
+         SEARCH OVERLAY
+    ========================================== -->
+
+    <div
+        class="search-overlay"
+        id="searchOverlay"
+    >
+
+        <div class="search-box">
+
+            <span class="search-large-icon">
+                ⌕
+            </span>
+
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search music, artists or playlists..."
+            >
+
+
+            <button
+                class="close-search"
+                id="closeSearch"
+            >
+                ×
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         MAIN
+    ========================================== -->
+
+    <main>
+
+
+        <!-- =====================================
+             HERO
+        ====================================== -->
+
+        <section
+            class="hero"
+            id="home"
+        >
+
+            <div class="hero-content">
+
+                <div class="hero-badge">
+
+                    <span>
+                        ✦
+                    </span>
+
+                    My personal playlist
+
+                </div>
+
+
+                <h1>
+
+                    Koleksi lagu
+
+                    <span>
+                        favorit ku.
+                    </span>
+
+                </h1>
+
+
+                <p>
+
+                    Kumpulan lagu-lagu pilihan yang menemani
+                    hari-hariku. Dengarkan dan nikmati
+                    setiap momennya.
+
+                </p>
+
+
+                <div class="hero-buttons">
+
+                    <button
+                        class="primary-button"
+                        id="startButton"
+                    >
+
+                        <span>
+                            ▶
+                        </span>
+
+                        Putar Semua
+
+                    </button>
+
+
+                    <a
+                        href="#songs"
+                        class="secondary-button"
+                    >
+
+                        Lihat Koleksi
+
+                    </a>
+
+                </div>
+
+
+                <div class="hero-stats">
+
+                    <div class="stat">
+
+                        <strong>
+                            17
+                        </strong>
+
+                        <span>
+                            Lagu
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <strong>
+                            5
+                        </strong>
+
+                        <span>
+                            Genre
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <strong>
+                            ∞
+                        </strong>
+
+                        <span>
+                            Vibes
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- HERO VISUAL -->
+
+            <div class="hero-visual">
+
+                <div class="hero-glow"></div>
+
+
+                <div class="music-disc">
+
+                    <div class="disc-line line-one"></div>
+
+                    <div class="disc-line line-two"></div>
+
+                    <div class="disc-line line-three"></div>
+
+
+                    <div class="disc-center">
+                        ♪
+                    </div>
+
+                </div>
+
+
+                <div class="floating-card card-one">
+
+                    <div class="floating-icon">
+                        ♫
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Now Playing
+                        </strong>
+
+                        <small>
+                            Discover something new
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="floating-card card-two">
+
+                    <div class="floating-icon">
+                        ♥
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            10K+
+                        </strong>
+
+                        <small>
+                            Curated playlists
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             DISCOVER
+        ====================================== -->
+
+        <section
+            class="section"
+            id="discover"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-label">
+                        MOOD
+                    </span>
+
+                    <h2>
+                        Pilih suasana hati
+                    </h2>
+
+                </div>
+
+
+                <button class="see-all">
+                    See all →
+                </button>
+
+            </div>
+
+
+            <div class="mood-grid">
+
+
+                <article class="mood-card mood-purple">
+
+                    <div class="mood-icon">
+                        ☾
+                    </div>
+
+                    <div class="mood-content">
+
+                        <h3>
+                            Late Night
+                        </h3>
+
+                        <p>
+                            Chill sounds for quiet nights.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="mood-card mood-orange">
+
+                    <div class="mood-icon">
+                        ☀
+                    </div>
+
+                    <div class="mood-content">
+
+                        <h3>
+                            Good Vibes
+                        </h3>
+
+                        <p>
+                            Start your day with positive energy.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="mood-card mood-blue">
+
+                    <div class="mood-icon">
+                        〽
+                    </div>
+
+                    <div class="mood-content">
+
+                        <h3>
+                            Focus
+                        </h3>
+
+                        <p>
+                            Stay focused and get things done.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="mood-card mood-pink">
+
+                    <div class="mood-icon">
+                        ♥
+                    </div>
+
+                    <div class="mood-content">
+
+                        <h3>
+                            Romance
+                        </h3>
+
+                        <p>
+                            Music for unforgettable moments.
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+
+
+    </main>
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer>
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 Limausong. Web playlist pribadi.
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================================
+         MUSIC PLAYER
+    ========================================== -->
+
+    <div
+        class="music-player"
+        id="musicPlayer"
+    >
+
+        <!-- REAL AUDIO -->
+        <audio
+            id="audioPlayer"
+            preload="metadata"
+        ></audio>
+
+
+        <!-- SONG -->
+
+        <div class="player-song">
+
+            <div
+                class="player-cover"
+                id="playerCover"
+            >
+                ♪
+            </div>
+
+
+            <div class="song-information">
+
+                <strong id="songTitle">
+                    Belum ada lagu
+                </strong>
+
+                <span id="songArtist">
+                    Pilih lagu dulu
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- CONTROLS -->
+
+        <div class="player-controls">
+
+            <button
+                id="previousButton"
+                title="Previous"
+            >
+                ◀
+            </button>
+
+
+            <button
+                class="main-play"
+                id="playButton"
+                title="Play"
+            >
+                ▶
+            </button>
+
+
+            <button
+                id="nextButton"
+                title="Next"
+            >
+                ▶
+            </button>
+
+        </div>
+
+
+        <!-- PROGRESS -->
+
+        <div class="player-progress">
+
+            <span id="currentTime">
+                0:00
+            </span>
+
+
+            <div
+                class="progress-bar"
+                id="progressBar"
+            >
+
+                <div
+                    class="progress"
+                    id="progress"
+                ></div>
+
+            </div>
+
+
+            <span id="duration">
+                0:00
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ====================    `====================== -->
+
+    <script src="js/index.js"></script>
+
+</body>
+
+</html>
