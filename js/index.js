@@ -49,8 +49,8 @@ const songs = [
 
     {
         id: 1,
-        title: "Lagu Upload",
-        artist: "Belum diketahui",
+        title: "Style",
+        artist: "Taylor Swift",
         genre: "Pop",
         src: "assets/music/lagu_baru.mp3",
         cover: "song-cover-1"
