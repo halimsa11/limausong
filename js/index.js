@@ -27,7 +27,8 @@ const searchOverlay = document.getElementById("searchOverlay");
 const searchInput = document.getElementById("searchInput");
 const searchResults = document.getElementById("searchResults");
 
-const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+const mobileMenuToggle = document.getElementById("menuButton")
+    || document.getElementById("mobileMenuToggle");
 const mobileMenu = document.getElementById("mobileMenu");
 
 
@@ -130,7 +131,11 @@ function renderSongs(songArray = songs) {
 
         songItem.innerHTML = `
             <div class="song-number">
-                ${String(index + 1).padStart(2, "0")}
+                <span>${String(index + 1).padStart(2, "0")}</span>
+                <div class="playing-bars">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="song-play-hover">▶</div>
             </div>
 
             <div class="song-cover ${song.cover}">
@@ -140,8 +145,11 @@ function renderSongs(songArray = songs) {
             <div class="song-info">
                 <h3>${song.title}</h3>
                 <p>${song.artist}</p>
-                <span class="song-genre">${song.genre}</span>
             </div>
+
+            <div class="song-artist-col">${song.artist}</div>
+
+            <span class="song-genre">${song.genre}</span>
 
             <button
                 class="song-play"
@@ -601,23 +609,37 @@ function searchSongs(keyword) {
 
 function renderSearchResults(results) {
 
-    if (!searchResults) return;
+    const searchResultsList = document.getElementById("searchResults");
+    const searchEmpty = document.getElementById("searchEmpty");
+    const searchCount = document.getElementById("searchCount");
 
-    searchResults.innerHTML = "";
+    if (!searchResultsList) return;
+
+    searchResultsList.innerHTML = "";
 
     if (results.length === 0) {
 
-        searchResults.innerHTML = `
-            <div class="search-empty">
-                <span>🔍</span>
-                <p>Lagu tidak ditemukan</p>
-            </div>
-        `;
+        if (searchEmpty) searchEmpty.style.display = "block";
+        searchResultsList.style.display = "none";
+
+        if (searchCount) {
+            searchCount.textContent = "Tidak ada hasil";
+        }
 
         return;
     }
 
-    results.forEach(song => {
+    if (searchEmpty) searchEmpty.style.display = "none";
+    searchResultsList.style.display = "";
+
+    if (searchCount) {
+        searchCount.textContent =
+            results.length === songs.length
+                ? `Menampilkan semua ${results.length} lagu`
+                : `${results.length} lagu ditemukan`;
+    }
+
+    results.forEach((song, index) => {
 
         const originalIndex =
             songs.findIndex(
@@ -630,7 +652,14 @@ function renderSearchResults(results) {
         resultItem.className =
             "search-result-item";
 
+        resultItem.style.animationDelay = `${index * 0.04}s`;
+
         resultItem.innerHTML = `
+            <div class="result-number">
+                <span>${String(index + 1).padStart(2, "0")}</span>
+                <div class="result-play-hover">▶</div>
+            </div>
+
             <div class="search-result-cover ${song.cover}">
                 ♪
             </div>
@@ -638,12 +667,14 @@ function renderSearchResults(results) {
             <div class="search-result-info">
                 <h4>${song.title}</h4>
                 <p>${song.artist}</p>
-                <span>${song.genre}</span>
             </div>
+
+            <span class="result-genre-badge">${song.genre}</span>
 
             <button
                 type="button"
                 class="search-result-play"
+                aria-label="Play ${song.title}"
             >
                 ▶
             </button>
@@ -675,7 +706,7 @@ function renderSearchResults(results) {
             }
         );
 
-        searchResults.appendChild(resultItem);
+        searchResultsList.appendChild(resultItem);
 
     });
 
@@ -683,23 +714,36 @@ function renderSearchResults(results) {
 
 
 // ==========================================
-// SEARCH INPUT
+// SEARCH INPUT (overlay)
 // ==========================================
 
-if (searchInput) {
+let activeFilter = "all";
 
-    searchInput.addEventListener(
-        "input",
-        () => {
+function applySearchAndFilter() {
 
-            const results =
-                searchSongs(searchInput.value);
+    const query = searchInput
+        ? searchInput.value.trim().toLowerCase()
+        : "";
 
-            renderSearchResults(results);
+    let results = songs;
 
-        }
-    );
+    // Apply genre filter
+    if (activeFilter !== "all") {
+        results = results.filter(song =>
+            song.genre.toLowerCase() === activeFilter.toLowerCase()
+        );
+    }
 
+    // Apply text search
+    if (query) {
+        results = results.filter(song =>
+            song.title.toLowerCase().includes(query) ||
+            song.artist.toLowerCase().includes(query) ||
+            song.genre.toLowerCase().includes(query)
+        );
+    }
+
+    renderSearchResults(results);
 }
 
 
@@ -712,15 +756,29 @@ function openSearch() {
     if (!searchOverlay) return;
 
     searchOverlay.classList.add("active");
+    document.body.classList.add("search-open");
+
+    // Reset state
+    activeFilter = "all";
+    document.querySelectorAll(".filter-pill").forEach(p => {
+        p.classList.remove("active");
+        if (p.dataset.filter === "all") p.classList.add("active");
+    });
 
     if (searchInput) {
+        searchInput.value = "";
+    }
 
+    const searchClearBtn = document.getElementById("searchClearBtn");
+    if (searchClearBtn) searchClearBtn.style.display = "none";
+
+    // Render all songs on open
+    applySearchAndFilter();
+
+    if (searchInput) {
         setTimeout(() => {
-
             searchInput.focus();
-
-        }, 100);
-
+        }, 150);
     }
 
 }
@@ -735,27 +793,126 @@ function closeSearch() {
     if (!searchOverlay) return;
 
     searchOverlay.classList.remove("active");
+    document.body.classList.remove("search-open");
 
 }
 
 
 // ==========================================
-// SEARCH BUTTON
+// SEARCH BUTTON (navbar)
 // ==========================================
 
+const searchButtonEl = document.getElementById("searchButton");
+if (searchButtonEl) {
+    searchButtonEl.addEventListener("click", openSearch);
+}
+
+// Legacy selector fallback
 const searchButtons =
     document.querySelectorAll(
         '[data-search], .search-btn, .nav-search'
     );
 
 searchButtons.forEach(button => {
+    button.addEventListener("click", openSearch);
+});
 
-    button.addEventListener(
-        "click",
-        openSearch
-    );
+
+// ==========================================
+// SEARCH INPUT EVENT (overlay)
+// ==========================================
+
+if (searchInput) {
+    searchInput.addEventListener("input", () => {
+        applySearchAndFilter();
+        const searchClearBtn = document.getElementById("searchClearBtn");
+        if (searchClearBtn) {
+            searchClearBtn.style.display =
+                searchInput.value ? "flex" : "none";
+        }
+    });
+}
+
+
+// ==========================================
+// CLEAR SEARCH BUTTON
+// ==========================================
+
+const searchClearBtn = document.getElementById("searchClearBtn");
+if (searchClearBtn) {
+    searchClearBtn.addEventListener("click", () => {
+        if (searchInput) searchInput.value = "";
+        searchClearBtn.style.display = "none";
+        applySearchAndFilter();
+        if (searchInput) searchInput.focus();
+    });
+}
+
+
+// ==========================================
+// GENRE FILTER PILLS
+// ==========================================
+
+document.querySelectorAll(".filter-pill").forEach(pill => {
+
+    pill.addEventListener("click", () => {
+
+        document.querySelectorAll(".filter-pill").forEach(p =>
+            p.classList.remove("active")
+        );
+
+        pill.classList.add("active");
+
+        activeFilter = pill.dataset.filter || "all";
+
+        applySearchAndFilter();
+
+    });
 
 });
+
+
+// ==========================================
+// PLAYLIST INLINE SEARCH
+// ==========================================
+
+const playlistSearchInput = document.getElementById("playlistSearchInput");
+
+if (playlistSearchInput) {
+
+    playlistSearchInput.addEventListener("input", () => {
+
+        const query = playlistSearchInput.value.trim().toLowerCase();
+
+        if (!query) {
+            renderSongs(songs);
+            return;
+        }
+
+        const filtered = songs.filter(song =>
+            song.title.toLowerCase().includes(query) ||
+            song.artist.toLowerCase().includes(query) ||
+            song.genre.toLowerCase().includes(query)
+        );
+
+        renderSongs(filtered);
+
+    });
+
+}
+
+
+// ==========================================
+// SHOW ALL SONGS BUTTON
+// ==========================================
+
+const showAllSongsBtn = document.getElementById("showAllSongs");
+if (showAllSongsBtn) {
+    showAllSongsBtn.addEventListener("click", () => {
+        renderSongs(songs);
+        if (playlistSearchInput) playlistSearchInput.value = "";
+    });
+}
 
 
 // ==========================================
